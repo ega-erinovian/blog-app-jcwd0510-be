@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createBlogController,
+  getBlogController,
   getBlogsController,
 } from "../controllers/blog.controller";
 import { uploader } from "../lib/multer";
@@ -21,5 +22,7 @@ router.post(
   validateCreateBlog,
   createBlogController
 );
+
+router.get("/:id", getBlogController);
 
 export default router;
