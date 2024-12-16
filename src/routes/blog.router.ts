@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createBlogController,
+  deleteBlogController,
   getBlogController,
   getBlogsController,
 } from "../controllers/blog.controller";
@@ -12,6 +13,7 @@ import { verifyToken } from "../lib/jwt";
 const router = Router();
 
 router.get("/", getBlogsController);
+router.get("/:id", getBlogController);
 
 // Harus berurutan:
 router.post(
@@ -23,6 +25,6 @@ router.post(
   createBlogController
 );
 
-router.get("/:id", getBlogController);
+router.delete("/:id", verifyToken, deleteBlogController);
 
 export default router;

@@ -2,7 +2,7 @@ import prisma from "../../lib/prisma";
 
 export const getBlogService = async (id: number) => {
   try {
-    const blog = prisma.blog.findFirst({
+    const blog = await prisma.blog.findFirst({
       where: { id },
       include: {
         user: { select: { name: true } },
