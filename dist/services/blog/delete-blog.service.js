@@ -12,23 +12,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getBlogService = void 0;
+exports.deleteBlogService = void 0;
 const prisma_1 = __importDefault(require("../../lib/prisma"));
-const getBlogService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteBlogService = (id, userId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const blog = yield prisma_1.default.blog.findFirst({
             where: { id },
-            include: {
-                user: { select: { name: true } },
-            },
         });
         if (!blog) {
             throw new Error("Blog not found.");
         }
-        return blog;
+        if (blog.userId !== userId) {
+            throw new Error("You are not authorized to delete this blog.");
+        }
+        yield prisma_1.default.blog.update({
+            where: { id },
+            data: { deletedAt: new Date() },
+        });
+        return { message: "Blog deleted successfully." };
     }
     catch (error) {
         throw error;
     }
 });
-exports.getBlogService = getBlogService;
+exports.deleteBlogService = deleteBlogService;

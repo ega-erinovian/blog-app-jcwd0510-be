@@ -33,6 +33,9 @@ const getBlogsService = (query) => __awaiter(void 0, void 0, void 0, function* (
             orderBy: {
                 [sortBy]: sortOrder,
             },
+            include: {
+                user: { select: { name: true } },
+            },
         });
         // Hitung seluruh total data
         const count = yield prisma_1.default.blog.count({
