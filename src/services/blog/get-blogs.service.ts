@@ -28,6 +28,9 @@ export const getBlogsService = async (query: GetBlogQuery) => {
       orderBy: {
         [sortBy]: sortOrder,
       },
+      include: {
+        user: { select: { name: true } },
+      },
     });
 
     // Hitung seluruh total data
